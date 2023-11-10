@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block js %}
+<script>
+    let previews=document.getElementsByClassName('preview');
+      Array.from(previews).forEach((element)=>{
+          element.innerHTML=element.innerText;
+      })
+</script>
+{% endblock js %}
+{% block style %}
+
+
+#cardBlog{
+width:70%;
+align:center;
+
+}
+#blogs{
+display:flex;
+justify-content:center;
+}
+
+#authorName{
+font-size:100%;
+color:blue;
+}
+
+{% endblock %}
+
+
+{% block body %}
+{% for post in allPost %}
+<div class="container my-4">
+    <div id="blogs">
+
+        <div id="cardBlog" class="card mb-3">
+            <div class="card-body">
+                <p id="authorName">Article by : {{post.author}}</p>
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">
+                <div class="preview"> {{post.content|safe | truncatechars:200}}</div>
+                </p>
+                {% comment %} If / is in starting that means new endpoint {% endcomment %}
+                <a href="/blog/{{post.slug}}" class="btn btn-primary">Read more</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block blog %}active{% endblock %}

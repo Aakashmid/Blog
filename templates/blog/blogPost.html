@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block style %}
+p #authorName{
+font-size:100%;
+color:blue;
+text-decoration:none;
+}
+
+
+{% endblock %}
+
+{% block body %}
+{% load humanize %}
+{% load extras %}
+
+
+<div class="container my-4">
+    <h3>{{post.title}}</h3>
+    <p>{{post.timestamp}}, By <a id="authorName" href="/about/">{{post.author}}</a></p>
+    <p>
+        {{post.content|safe}}
+    </p>
+
+
+    <div class="container my-4">
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        <h3>Comments({{comments.count}})</h3><br>
+        {% if user.is_anonymous %}
+        <p>Login to post comment</P>
+        {% else %}
+
+        <form class="form-group" action="/blog/postComment" method="post">
+            {% csrf_token %}
+            <input class="form-control" type="text" name="comment" placeholder="enter your comments here">
+            <input type="hidden" name="postSno" value="{{post.sno}}">
+            <input type="hidden" name="parentSno" value="">
+            <input type="submit" class="btn btn-primary my-2" value="submit">
+        </form>
+        {% endif %}
+
+        {% load static %}
+
+        {% comment %} Showing comments on post {% endcomment %}
+        {% comment %} taking comments for blogPost {% endcomment %}
+     
+        {% for comment in comments %}
+        <div class="row">
+            <div class="col-md-1">
+                <img class="rounded mx-auto d-block w-75  p-2" src="{% static 'image/user2.png' %}"
+                    alt="image is loading">
+            </div>
+            <div class="col-md-11 p-2"><b>{{comment.user}} </b><span style="font-size: 80%;"> at
+                    {{comment.timeStamp| naturaltime}} </span>
+                <div>{{comment.comments}}
+                </div>
+
+                <!-- Replies -->
+                {% if user.is_authenticated %}
+
+                <div class="replyInput">
+                    <button class="btn btn-sm btn-primary sm mx-1 my-2 " type="button" data-bs-toggle="collapse"
+                        data-bs-target="#reply{{comment.sno}}" aria-expanded="false"
+                        aria-controls="reply{{comment.sno}}">
+                        Reply
+                    </button>
+                    
+                    <a  id="ShowReplyBtn" class="link-primary link-opacity-50-hover text-decoration-none mx-1 my-2 py-2 px-1 rounded-pill " data-bs-toggle="collapse" href="#replies{{comment.sno}}" 
+                        aria-expanded="false" aria-controls="replies{{comment.sno}}">
+                        Replies({{replyDict|get_replies:comment.sno|length}})    <!-- giving no. of replies-->
+                    </a>
+
+                    
+                    <!-- reply form -->
+                    <div class="collapse" id="reply{{comment.sno}}" aria-expanded="false">
+                        <div class="card card-body my-2">
+                            <form class="form-group" action="/blog/postComment" method="post">
+                                {% csrf_token %}
+                                <input class="form-control" type="text" name="comment"
+                                placeholder="enter your comments here">
+                                <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                                <input type="submit" class="btn btn-primary my-2" value="submit">
+                                <input type="hidden" name="postSno" value="{{post.sno}}">
+                            </form>
+                            
+                            
+                        </div>
+                    </div>
+                    <!-- this collapse show replies  -->
+                    <div class="collapse" id="replies{{comment.sno}}" aria-expanded="false">
+    
+                        <div class="replies">
+                            {% comment %} get_replies is custome tmplate method {% endcomment %}
+                            {% for reply in replyDict|get_replies:comment.sno %}
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <img class="rounded mx-auto d-block w-75  p-2" src="{% static 'image/user2.png' %}"
+                                        alt="image is loading">
+                                </div>
+                                <div class="col-md-11 p-2"><b>{{reply.user}} </b><span style="font-size: 80%;"> at
+                                        {{reply.timeStamp|naturaltime }} </span>
+                                    <div>{{reply.comments}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <button class="btn btn-sm btn-primary" disabled>Login to reply</button>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock %}

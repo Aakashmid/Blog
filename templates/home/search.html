@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% comment %} styling {% endcomment %}
+
+{% block style %}
+
+#cardBlog{
+    width:70%;
+    align:center;
+    
+    }
+    #blogs{
+    display:flex;
+    justify-content:center;
+    }
+    
+    #authorName{
+        font-size:100%;
+        color:blue;
+    }
+    #NoResult{
+        margin-left:15%;
+    }
+    {% endblock %}
+
+{% comment %} Body elements {% endcomment %}
+{% block body %}
+
+
+{% comment %} {% if query|length < 1 %}
+<div>
+    <h4 id="NoResult">Please type something for search </h4>
+</div> {% endcomment %}
+
+{% if query|length < 1  %}
+<div class="my-4">
+<h5 id="NoResult">Type something for search !!</h5>
+</div>
+
+{% elif Posts|length < 1  %}
+<div class="my-4">
+<ul id="NoResult" >
+    <p>No search result found</p>
+    Your search -<b> {{query}}</b> - did not match any documents.<br>
+    <br>
+Suggestions:
+<br><br>
+
+<li>Make sure that all words are spelled correctly.</li>
+<li>Try different keywords.</li>
+<li>Try more general keywords.</li>
+</ul>
+</div>
+
+
+
+{% else %}
+
+
+<div class="container my-4">
+    <h3 style="margin-left: 15%;"> Search Results :</h3>
+    <br>
+    <br>
+    {% for post in Posts %}
+
+    <div id="blogs">
+
+        <div id="cardBlog" class="card mb-3">
+            <div class="card-body">
+                <p id="authorName">Article by : {{post.author}}</p>
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.content | truncatechars:300}}</p>
+                {% comment %} If / is in starting that means new endpoint {% endcomment %}
+                <a href="/blog/{{post.slug}}" class="btn btn-primary">Read more
+
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif%}
+
+{% endblock %}

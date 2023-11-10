@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Contact Page{% endblock  %}
+{% block style %}
+.container {
+    display:flex;
+    justify-content:center;
+}
+.container form{
+    width:70%;
+}
+
+{% endblock  %}
+
+
+{% block contact %}active{% endblock %}
+
+{% block body %}
+
+
+<div class="container my-3 py-4 ">
+    
+
+    <form method="post" action="/contact/">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder=" Enter your name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address">
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone No.</label>
+            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your phone no.">
+        </div>
+
+        <div class="mb-3">
+            <label for="desc" class="form-label">For what you want to contact.....</label>
+            <textarea type='text' class="form-control" name='desc' id="desc" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin: 50px ;">Submit</button>
+    </form>
+</div>
+
+{% endblock  %}
+{% comment %} {% block title %}{% endblock  %} {% endcomment %}
