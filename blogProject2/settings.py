@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4jed(a!+v!_cfr_9k4t21w9k4^n!w@yf1ff(quqg$b%#uy%d6i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['blog-aakashmid.onrender.com']
+ALLOWED_HOSTS = ['blog-aakashmid.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -131,4 +131,5 @@ MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+# STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+STATIC_ROOT=os.path.join(BASE_DIR, 'static')
