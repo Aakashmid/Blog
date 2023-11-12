@@ -3,14 +3,51 @@
 {% block title %}{% endblock %}
 
 {% block style %}
-p #authorName{
-font-size:100%;
-color:blue;
+<!-- <style> -->
+
+    p #authorName{
+        font-size:100%;
+        color:blue;
 text-decoration:none;
 }
 
+<!-- styling of user image -->
+<!-- .UserImage{
+    width:50%;
+    margin-top:1%;
 
-{% endblock %}
+} -->
+.replies .UserImage{
+    width:3%;
+    margin-top:1%;
+
+}
+
+.UserImage img{
+    width:80%;
+    padding:10%;
+    <!-- padding-top: 20%; -->
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .UserImage{
+        width:5%;
+        padding-top:2%;
+    
+    }
+
+    .replies .UserImage{
+        width:3%;
+        padding-top:2%;
+    
+    }
+  }
+
+<!-- </style> -->
+
+
+{% endblock style %}
 
 {% block body %}
 {% load humanize %}
@@ -47,9 +84,13 @@ text-decoration:none;
         {% comment %} taking comments for blogPost {% endcomment %}
      
         {% for comment in comments %}
-        <div class="row">
-            <div class="col-md-1">
-                <img class="rounded mx-auto d-block w-75  p-2" src="{% static 'image/user2.png' %}"
+        <div class="d-flex">
+            <!-- {% comment %} <div class="col-md-1">
+                <img class="rounded mx-auto d-block w-75  p-2" src="{% static "image/user2.png" %}}"
+                    alt="image is loading">
+            </div> {% endcomment %} -->
+            <div class="UserImage" id="UserImage" >
+                <img  src="{% static "image/user2.png" %}"
                     alt="image is loading">
             </div>
             <div class="col-md-11 p-2"><b>{{comment.user}} </b><span style="font-size: 80%;"> at
@@ -94,9 +135,9 @@ text-decoration:none;
                         <div class="replies">
                             {% comment %} get_replies is custome tmplate method {% endcomment %}
                             {% for reply in replyDict|get_replies:comment.sno %}
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <img class="rounded mx-auto d-block w-75  p-2" src="{% static 'image/user2.png' %}"
+                            <div class="d-flex">
+                                <div class="UserImage">
+                                    <img  src="{% static "image/user2.png" %}"
                                         alt="image is loading">
                                 </div>
                                 <div class="col-md-11 p-2"><b>{{reply.user}} </b><span style="font-size: 80%;"> at

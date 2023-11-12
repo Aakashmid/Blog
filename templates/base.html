@@ -13,7 +13,13 @@
   <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
   <style>
     {% block style %}
+    @media only screen and (max-width: 768px){
 
+      {% comment %} #dropdownUser{
+        margin-top:2%;
+        margin-left:-2%;
+      } {% endcomment %}
+    }
       {% endblock style %}
 
 
@@ -54,12 +60,14 @@
         </form>
         {% if user.is_authenticated %}
         <div class="dropdown mx-2">
-          <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="btn btn-outline-secondary dropdown-toggle my-2" href="#" id="dropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Welcome {{user}}
           </a>
         
           <ul class="dropdown-menu ">
             <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            <li><a class="dropdown-item" href="/logout">Setting</a></li>
+            <li><a class="dropdown-item" href="/logout">Account Details</a></li>
             {% comment %} <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> {% endcomment %}
           </ul>

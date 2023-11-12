@@ -69,6 +69,7 @@ def signUp(request):
             user.first_name=fname
             user.last_name=lname
             user.save()
+            login(request,user)
             messages.success(request,'Account is created succefuly!!')
             return redirect('/')
     else:
