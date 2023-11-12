@@ -10,7 +10,7 @@ def BlogHome(request):
         allPost=Post.objects.all()
         context={'allPost':allPost}
         
-        print(allPost)
+
         return render(request,'blog/blogHome.html',context)
         # return redirect(request,'home/')
 def BlogPost(request,slug):
