@@ -1,13 +1,16 @@
 {% extends "base.html" %}
+{% load humanize %}
+{% load extras %}
+{% load static %}
 
 {% block title %}{% endblock %}
 
 {% block style %}
 <!-- <style> -->
 
-    p #authorName{
-        font-size:100%;
-        color:blue;
+p #authorName{
+font-size:100%;
+color:blue;
 text-decoration:none;
 }
 
@@ -18,31 +21,31 @@ text-decoration:none;
 
 } -->
 .replies .UserImage{
-    width:3%;
-    margin-top:1%;
+width:3%;
+margin-top:1%;
 
 }
 
 .UserImage img{
-    width:80%;
-    padding:10%;
-    <!-- padding-top: 20%; -->
+width:80%;
+padding:10%;
+<!-- padding-top: 20%; -->
 }
 
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    .UserImage{
-        width:5%;
-        padding-top:2%;
-    
-    }
+/* For mobile phones: */
+.UserImage{
+width:5%;
+padding-top:2%;
 
-    .replies .UserImage{
-        width:3%;
-        padding-top:2%;
-    
-    }
-  }
+}
+
+.replies .UserImage{
+width:3%;
+padding-top:2%;
+
+}
+}
 
 
 
@@ -50,8 +53,7 @@ text-decoration:none;
 {% endblock style %}
 
 {% block body %}
-{% load humanize %}
-{% load extras %}
+
 
 
 <div class="container my-4">
@@ -78,20 +80,19 @@ text-decoration:none;
         </form>
         {% endif %}
 
-        {% load static %}
+
 
         {% comment %} Showing comments on post {% endcomment %}
         {% comment %} taking comments for blogPost {% endcomment %}
-     
+
         {% for comment in comments %}
         <div class="d-flex">
             <!-- {% comment %} <div class="col-md-1">
                 <img class="rounded mx-auto d-block w-75  p-2" src="{% static "image/user2.png" %}}"
                     alt="image is loading">
             </div> {% endcomment %} -->
-            <div class="UserImage" id="UserImage" >
-                <img  src="{% static "image/user2.png" %}"
-                    alt="image is loading">
+            <div class="UserImage" id="UserImage">
+                <img src="{% static " image/user2.png" %}" alt="image is loading">
             </div>
             <div class="col-md-11 p-2"><b>{{comment.user}} </b><span style="font-size: 80%;"> at
                     {{comment.timeStamp| naturaltime}} </span>
@@ -107,38 +108,39 @@ text-decoration:none;
                         aria-controls="reply{{comment.sno}}">
                         Reply
                     </button>
-                    
-                    <a  id="ShowReplyBtn" class="link-primary link-opacity-50-hover text-decoration-none mx-1 my-2 py-2 px-1 rounded-pill " data-bs-toggle="collapse" href="#replies{{comment.sno}}" 
-                        aria-expanded="false" aria-controls="replies{{comment.sno}}">
-                        Replies({{replyDict|get_replies:comment.sno|length}})    <!-- giving no. of replies-->
+
+                    <a id="ShowReplyBtn"
+                        class="link-primary link-opacity-50-hover text-decoration-none mx-1 my-2 py-2 px-1 rounded-pill "
+                        data-bs-toggle="collapse" href="#replies{{comment.sno}}" aria-expanded="false"
+                        aria-controls="replies{{comment.sno}}">
+                        Replies({{replyDict|get_replies:comment.sno|length}}) <!-- giving no. of replies-->
                     </a>
 
-                    
+
                     <!-- reply form -->
                     <div class="collapse" id="reply{{comment.sno}}" aria-expanded="false">
                         <div class="card card-body my-2">
                             <form class="form-group" action="/blog/postComment" method="post">
                                 {% csrf_token %}
                                 <input class="form-control" type="text" name="comment"
-                                placeholder="enter your comments here">
+                                    placeholder="enter your comments here">
                                 <input type="hidden" name="parentSno" value="{{comment.sno}}">
                                 <input type="submit" class="btn btn-primary my-2" value="submit">
                                 <input type="hidden" name="postSno" value="{{post.sno}}">
                             </form>
-                            
-                            
+
+
                         </div>
                     </div>
                     <!-- this collapse show replies  -->
                     <div class="collapse" id="replies{{comment.sno}}" aria-expanded="false">
-    
+
                         <div class="replies">
                             {% comment %} get_replies is custome tmplate method {% endcomment %}
                             {% for reply in replyDict|get_replies:comment.sno %}
                             <div class="d-flex">
                                 <div class="UserImage">
-                                    <img  src="{% static "image/user2.png" %}"
-                                        alt="image is loading">
+                                    <img src="{% static " image/user2.png" %}" alt="image is loading">
                                 </div>
                                 <div class="col-md-11 p-2"><b>{{reply.user}} </b><span style="font-size: 80%;"> at
                                         {{reply.timeStamp|naturaltime }} </span>
