@@ -140,7 +140,7 @@ padding-top:2%;
                             {% for reply in replyDict|get_replies:comment.sno %}
                             <div class="d-flex">
                                 <div class="UserImage">
-                                    <img src="{% static " image/user2.png" %}" alt="image is loading">
+                                    <img src="/media/image/user2.png" alt="image is loading">
                                 </div>
                                 <div class="col-md-11 p-2"><b>{{reply.user}} </b><span style="font-size: 80%;"> at
                                         {{reply.timeStamp|naturaltime }} </span>
